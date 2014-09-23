@@ -1,0 +1,14 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	CHECK_A           3000
+//	CHECK_B           3004
+//	CONVERT_A         300A
+//	FIRST             300D
+//	SEC               300F
+//	LOOP              3013
+//	MODULO            3019
+//	ZERO_MOD          301D
+//	END_P             301F
+

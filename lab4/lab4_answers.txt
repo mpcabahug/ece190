@@ -1,0 +1,29 @@
+Question 1: Describe the errors that occur when trying to assemble lab4_code.asm. Identify the cause of each error.
+
+ 14: illegal operands for missing opcode - missing the .ORIG in the beginning
+ 16: instruction appears before .ORIG - there was no .ORIG next to x3000 so that's why this error occurred 
+ 17: constant outside of allowed range - trying to LD R2,x3010 didnt work so I added a label R2VAL to the .FILL xFFFF and did LD R2,R2VAL
+ 19: illegal operands for ADD - there was an extra comma
+ 30: constant outside of allowed range - trying to LD R5,x300F didn't work, so I put a label (CLEAR) on .FILL x0000, then did LD R5,CLEAR to clear R5. 
+ 32: label OUTERLOOP has already appeared - instead of BRzp, the line ear BRpz which gave an error
+ 35: constant outside of allowed range - trying to ST R1,x3011 wasn't working so I added a label (DEST) to .FILL x3011 and did ST R1,DEST.
+ 44: no .END directive found - no .END directive found, so I added that at the end.
+
+
+Question 2: For each label in the code, write down the corresponding memory location. 
+OUTERLOOP = x3004
+INNERLOOP = x3005
+INPUT = x300E
+CLEAR = x300F
+R2VAL = x3010
+DEST = x3011
+
+
+Question 3: Between using labels and explicit memory locations/offsets, which
+one makes the most sense, and why?
+
+I think that using labels makes much more sense. It's mnemonic so I can easily see where things are going. I will often confuse myself when trying to compute locations/offsets.
+
+Question 4: If you keep increasing the input, what do you observe and why?
+
+I made the new input x0010, and the output was x8000. The very nature of factorials will make the output bigger as input gets bigger. Eventually it'll overflow because the registers can only hold 16 bits (minus 1 for sign bit) so techincally it can only go up to around 32000. R5 will overflow really quick.

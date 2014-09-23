@@ -1,0 +1,70 @@
+Building complex types:
+Provide C code to declare a variable "s" which is an array of 4 structures
+with members "int" and "double."
+>> struct example {int a; double b;};
+struct example s[4];
+
+Custom type names:
+Declare the same variable "s" (an array of 4 structures with members "int"
+and "double"), this time using a custom type to identify the structure.
+>> struct example {int a; double b;};
+typedef example struct_arr[4]; 
+
+Operators:
+What is the type of "a" when it's used in an expression?
+>> an array of character pointers
+
+Operator []:
+What is the result of all six expressions? Why?
+>>> *(array+3);
+=> (int) 4
+We asked for the value at the pointer of (array +3) which is 4.
+
+>>> array[3];
+=> (int) 4
+Asked for the 3rd element in array, which is 4
+
+>>> *(base_pointer +3);
+=> (int) 4
+Same thing as the first expression. Base pointer is the beginning of the array, 
+that plus 3 is where 4 is stored.
+
+>>> base_pointer[3];
+=> (int) 4
+base_pointer points to the array, so it finds the value of the 3rd element
+
+>>> 3[array];
+=> (int) 4
+apparently this gets the 3rd element in the array too...
+
+>>> 3[base_pointer];
+=> (int) 4
+apparently this gets the 3rd element in the array too...
+
+
+Operator *:
+You have a variable with type "int" that you want to pass to a function, but
+the parameter has type "int *". How do you pass it?
+>> Make another variable a pointer to its location. int * b = &a;
+
+
+What if the parameter has type "int **"?
+>> Make yet another variable that points to that pointer. int ** c = &b;
+
+Operator ->:
+Suppose you have a variable called "vector_array" which is an array of this
+"vector" type. Write a C expression to access the y component of element 4 of
+the array.
+>> vector * y_comp = *(vector_array +3);
+(*y_comp).y_comp;
+y_comp->y_comp; 
+
+Operator &:
+Explain why "&array[3]" and "array + 3" are equivalent.
+>>if "array;" just gets the address of array, then "array +3" does the same thing as "&array[3]"
+
+operator sizeof:
+Another use of the sizeof operator is to compute the number of elements in
+an array: sizeof array / sizeof array[0] . Explain why this trick works.
+>>sizeof array = size of the array in bytes, while sizeof array[0] gives the size of the element.
+The ratio gives us the the number of elements.

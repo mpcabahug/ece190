@@ -1,0 +1,36 @@
+;Michelle Cabahug AE1//AD9 FALL 2013;
+
+;The purpose of this code is to divide two non-zero numbers 
+;by repeatedly subtracting the divisor from the dividend. I went about this
+;by storing A and B into registers, then subtracting B from A and storing 
+;it the result in another register until 
+;the condition code negative is set. Then I take the value stored in said
+;register and store it in x5000. If B is loaded and it sets the zero 
+;condition code, the value stored in x5000 is -1 and the program branches off to halt.
+
+;INITIALIZATION;
+0011 0000 0000 0000  ; specifies where the program will be stored (x3000)
+0101 000 000 1 00000 ; clear R0 by ANDing it with 0
+0001 000 000 1 11111 ; R0 <-[#-1]
+1011 000 000010010   ; Store R0 in memory location specified [PC + 18] away (x5000)
+0101 001 001 1 00000 ; clear R1 by ANDing it with 0
+0101 010 010 1 00000 ; clear R2 by ANDing it with 0
+0101 011 011 1 00000 ; clear R3 by ANDing it with 0 Used to store 
+0101 100 100 1 00000 ; clear R4 by ANDing it with 0 Used as counter
+1010 001 000001011   ; load A into R1 using indirect addr mode [PC + 11]
+1010 010 000001011   ; load B into R2 using indirect addr mode [PC + 11]
+0000 010 000001000   ; branch if B = 0 to HALT
+1001 010 010 1 11111 ; NOT R2,R2
+0001 010 010 1 00001 ; ADD R2,R2,#1 - achieved -B by NOTing B then ADDing 1
+0001 011 001 0 00 010; R3 <-[R1+R2] - First time doing A-B
+0000 100 000000011   ; branch if negative, skip loop to store then end program
+;MAIN LOOP;
+0001 100 100 1 00001 ; ADD R4[R4 +1] - increments loop counter
+0001 011 011 0 00 010; R3 <-[R3+R2] - subtracting (A-B)-B
+0000 011 111111101   ; branch if not negative, back up to beginning of mainloop
+;END OF LOOP;
+1011 011 000000011   ; Store R3 in memory location specified [PC + 3] away (x5000)
+1111 0000 0010 0101  ; HALT
+0100 0000 0000 0000  ; .FILL x4000 - memory location x4000
+0100 0000 0000 0001  ; .FILL x4001 - memory location x4001
+0101 0000 0000 0000  ; .FILL x5000 - memory location x5000

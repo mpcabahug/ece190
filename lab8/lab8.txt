@@ -1,0 +1,19 @@
+Problem #2 Activation Record:
+result
+yd
+xd
+main's frame pointer
+return address for main
+return value to main
+parameters: x1,x2,y1,y2
+
+Problem #3 Run-time Stack:
+runtime1	act1(factorial)		act2(fact_sqare)		
+				
+factorial	factor result			
+fact_square	factor			fact_square_result
+main		main frame pointer	main frame pointer
+		ret addr for main	ret addr for main
+		ret val to main		ret val to main
+		parameters: fact_in	parameters: fact_square_in
+		main			main

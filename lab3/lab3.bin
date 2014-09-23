@@ -1,0 +1,10 @@
+0011 0000 0000 0000  ; specifies where the program will be stored (x3000)
+
+0101 010 010 1 00000 ; clear R2 by ANDing it with x00000
+0001 010 010 1 01100 ; add the decimal number 12 to R2, and store result in R2
+;;;PUT YOUR INSTRUCTIONS AFTER THIS LINE;;;
+0001 010 010 1 01111 ; add the decimal number 15 to R2, and store result in R2
+0001 010 010 1 01111 ; add the decimal number 15 to R2, and store result in R2
+1111 0000 0010 0101  ; halt
+
+;;;The imm5 is in 2's complement form, so adding the binary representation of 30 (11110) will not work. Also, converting that to 2's complement form (00010) adds 2 instead of 30. So what I did was added 15 twice instead of adding 30 once to get 42.;;;

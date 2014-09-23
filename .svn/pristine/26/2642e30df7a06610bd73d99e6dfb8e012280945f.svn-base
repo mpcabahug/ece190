@@ -1,0 +1,8 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	NOT_PWR           3006
+//	IS_PWR            3008
+//	END_P             300B
+

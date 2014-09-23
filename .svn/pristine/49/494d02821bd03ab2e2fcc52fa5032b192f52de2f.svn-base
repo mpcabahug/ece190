@@ -1,0 +1,139 @@
+ECE190 Lab 2 questions
+
+Answer the following questions as clearly and succinctly possible.
+
+Signed integer computation
+
+In signed 16-bit mode, run the following computations with bincalc:
+
+1. 100 - 199 = -99 (x0064 - x00c7 = xff9d)
+-99 (xff9d)
+
+2. 1000 + 243 = 1243 (x03e8 + x00f3 = x04db)
+1243 (x04db)
+
+3. 21000 + 22000 = -22536 (x5208 + x55f0 = xa7f8)
+-22536 (xa7f8)
+
+4. 32767 + 1 = -32768 (x7fff + x0001 = x8000)
+-32768 (x8000)
+
+5. -32767 - 1 = -32768 (x8001 - x0001 = x8000)
+-32768 (x8000)
+
+Answer the following questions:
+
+1. What is the largest value representable in 16-bit signed format? Smallest?
+Ans: Largest:  2^(n-1) -1 = +32767 (0111 1111 1111 1111) Smallest:-2^(n-1) : -32768
+
+
+2. What is the result of the third computation? Why?
+Ans: The result of the third computation is -22536. One would expect it to be 43000, but since the addition of two positive numbers resulted in a negative number, we overflowed.
+
+
+3. Why does the fourth computation overflow, but not the fifth?
+Ans: The fourth computation overflows because the largest value we can represent with 16 bits in signed mode is +32767. By adding 1 to that, we go to the very beginning of the pattern, which starts at -32768. The fifth computation doesn't overflow because we can represent up to -32768.
+
+
+4. If you were to start at 0, and increment repeatedly (add 1), what pattern would you see (in signed mode)?
+Ans: In signed mode, starting at 0 and adding 1, we'd go from 0 to 32767,then -32768 back to 0, repeating that pattern.
+
+
+Unsigned integer computation
+
+In unsigned 16-bit mode, run the following computations:
+
+1. 100 - 199 = 65437 (x0064 - x00c7 = xff9d)
+65437 (xff9d)
+
+2. 21000 + 22000 = 43000 (x5208 + x55f0 = xa7f8)
+43000 (xa7f8)
+
+3. 32767 + 1 = 32768 (x7fff + x0001 = x8000)
+32768 (x8000)
+
+Answer the following questions:
+
+1. What is the largest value representable in 16-bit unsigned format? Smallest?
+Ans: Largest: (2^n) -1 = 65535. Smallest = 0
+
+
+2. What result do you get from the first computation? Why?
+Ans:The result is 65437. This is because in unsigned addition we cannot get negative numbers. So to get this answer, I did the computation normally (100 -199 = 99.) Then I took 99 and represented it as 16 bit binary digits (0000 0000 1001 1001). Then following two's complement, I inverted that number (1111 1111 0110 0110) and added 0000 0000 0000 0001 to get 1111 1111 0110 0111, which is xff9d, which is 65437 in decimal. 
+
+
+3. Why doesn't the second or third computation overflow?
+Ans: The third computation doesn't overflow because the largest value we can represent in 16 bit unsigned format is 65535, and 32767 + 1 is well below that maximum.
+
+
+4. If you were to start at 0, and increment repeatedly (add 1), what pattern would you see (in unsigned mode)?
+Ans: Starting at 0 and adding 1 repeatedly would give a pattern going 0,1,2,3,... until we reach the maximum value represented (65535). If we added 1 to that, we'd return to 0.
+
+
+5. What are the advantages and disadvantages of unsigned formats (compared to signed formats)?
+Ans: Unsigned formats can represent a higher value, but addition does not only deal with positive numbers, so when we need to represent a negative number we cannot. That's where signed formats come in.
+
+
+
+Floating point
+
+Run the following computations in single-precision (32-bit) floating-point mode:
+
+1. 1000 + 1 = 1001.000000 (x447a0000 + x3f800000 = x447a4000)
+1001.000000 (x447a4000)
+
+2. 11 / 3 = 3.666667 (x41300000 / x40400000 = x406aaaab)
+3.666667 (x406aaaab)
+
+3. 100 - 0.25 = 99.750000 (x42c80000 - x3e800000 = x42c78000)
+99.750000 (x42c78000)
+
+4. 100 - 0.3 = 99.699997 (x42c80000 - x3e99999a = x42c76666)
+99.699997 (x42c76666)
+
+5. -100 + 0.3 = -99.699997 (xc2c80000 + x3e99999a = xc2c76666)
+-99.699997 (xc2c76666)
+
+6. 9000 + 0.0001 - 9005 = 9000.000000 (x460ca000 + x38d1b717 = x460ca000)
+9000.000000 - 9005.000000 = -5.000000 (x460ca000 - x460cb400 = xc0a00000)
+-5.000000 (xc0a00000)
+
+7. 9000 - 9005 + 0.0001 = -5.000000 (x460ca000 - x460cb400 = xc0a00000)
+-5.000000 + 0.000100 = -4.999900 (xc0a00000 + x38d1b717 = xc09fff2e)
+-4.999900 (xc09fff2e)
+
+8. 9000 + 0.01 = 9000.009766 (x460ca000 + x3c23d70a = x460ca00a)
+9000.009766 (x460ca00a)
+
+9. 9000 * 0.01 = 90.000000 (x460ca000 * x3c23d70a = x42b40000)
+90.000000 (x42b40000)
+
+
+Answer the following questions:
+
+1. Why is there an error in the fourth computation, but not the third? (Hint: how do you encode 0.25 and 0.3 in floating point?)
+Ans: 0.25 encoded by 32 bit floating point is 0 125 0. 0.3 encoded is 0 125 1677722, which is why we get 99.699997 instead of just 99.7.
+
+
+2. How does the result of the fifth computation compare to the fourth? Explain. (Hint: look at the hex representations of the results. How does the floating point format handle negative numbers?)
+Ans: Floating point format is signed, so when the number is negative, the sign bit is 1. Float turned -100 into xc2c80000. Just like in 2's complement, it inverted and added 1 when doing the computation.
+
+
+3. Mathematically, would you expect the same results in computations 6 and 7? Do you observe this result experimentally? Explain. (Hint: try stepping through each computation)
+Ans: Mathematically, yes I would expect the computations in 6 and 7 to be the same because of order of operations, but because we're using single precision, there is weird rounding of 1E-4 so it looks like 9000 + 0.0001 = 9000. 
+
+
+4. What happens if you try computation 6 in double-precision (64-bit) floating-point mode? Why?
+Ans: We get = -4.999900 (x40c194000346dc5d - x40c1968000000000 = xc013ffe5c91d1800)
+-4.999900 (xc013ffe5c91d1800) which is the same as 7. The 0.0001 was not rounded this time.
+
+
+5. Why is there noticeable error in computation 8, but not 9? (Hint: think of multiplying floating point numbers like multiplying two numbers in scientific notation, how do you do it?)
+Ans: As in multiplying with scientific notation, you can multiply the coefficients, then just add the exponents. The error in 8 was because the mantissa came out to be something funky like 2348801. In 9, bincalc just used the exponent (120) to multiply. 
+
+
+6. The root cause of the Ariane 5 rocket failure was isolated to the conversion of a floating point number, which stored the horizontal component of the rocket's velocity, to a 16-bit signed integer. What is the most likely cause of the failure? (Hint: this wasn't some small rounding error, the computed velocity was way off, causing the system to go haywire)
+Ans: They probably used single precision, which rounded. Compounding rounded numbers gives even more error, which would cause the computed velocity to be way off.
+
+
+

@@ -1,0 +1,11 @@
+Place your answer to question 2 below:
+
+PC:  x300A
+R0:  x3000
+R1:  x3000
+R2:  x0001
+R3:  x7FFF
+R4:  x0000
+R5:  x3000
+R6:  x3000
+R7:  x3000

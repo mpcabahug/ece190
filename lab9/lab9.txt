@@ -1,0 +1,93 @@
+1. What is output from ccons? What is the initial value in the pointer? Will
+this always be the case? *Hint think about what is stored in a variable that
+is not initialized.
+
+>>> int* ipoint;
+>>> ipoint;
+Segmentation fault
+
+Since ipoint points to nothing, it would make sense that it contains nothing.
+
+2. What does the * operator do at this point in the code? What happened? Why?
+
+The * operator is trying to find the value of the piece of data stored in the address that is stored in ipointer. Since there is no address in ipointer, we get a segmentation fault.
+
+3. What is the output when running the following commands?
+
+>>> ipoint;
+=> (int *) 0x7fe3c905b028
+The address of int a;
+
+>>> &a;
+=> (int *) 0x7fe3c905b028
+The address of int a;
+
+>>> a; 
+=> (int) 5
+The value of a
+
+>>> a = a + 10;
+=> (int) 15
+The value of a + 10 
+
+>>> ipoint;
+=> (int *) 0x7fe3c905b028
+The address of int (a +10)
+
+>>> *ipoint;
+=> (int) 15
+The value stored at the address that ipoint is pointing to.
+
+>>> *ipoint = *ipoint - 10;
+=> (int) 5
+The value stored at the address that ipoint is point to, minus 10.
+
+>>> a;
+=> (int) 5
+The value of a.
+
+
+4. What happens when running the above code? Why? How did you fix the code?
+
+It printed 100 address after the address of the first item in the array and set the array values to i, then tried to print out each value of the array, but it got a segmentation fault because it tried to print iray[5] which does not exist. The last element of an array is stored in the array size -1, so the last element would be in iray[4]. I fixed it by modifying the second for loop so that it reads for(int i =0; i <4; i++).
+
+
+5. What is ipoint incremented by each time the statement ipoint = ipoint + 1
+is run when the array is of type double. Why? Notice that the output from the
+array starts with zero. Why?
+
+If the array us of type double, it increments by 8. Thats because double is twice as big as int. The output always starts at 0 because that's what it's set to when the pointer starts at i= 0;
+
+
+6. How does passing the arrays to a function using pointers affect the data as
+the array is being passed to the function? Hint: what happens if the array is
+changed in the function?
+
+When you pass by pointer, you're giving the function the address of the element, not the actual element. If you want to change the values in the array, you have to be careful to change the value and not the address.
+
+7. Why is there a problem with the previous code snippet? Which line gives the
+error? Why?
+
+The line pi = &pd is giving an error because we're giving incompatible pointer types. pd is a double pointer. pi is an integer pointer. pi cannot point to the address of pd because it's not big enough.
+
+8. Why is there a problem with that assignment?
+
+>>> p5 = &b;
+:8:{8:6-8:8}: warning: incompatible pointer types assigning to 'int (*)[5]' from 'int (*)[10]'
+ p5 = &b;
+    ^ ~~
+=> (int (*)[5]) 0x7f65305160c0
+
+int b[] and int a[] are not of the same size. 
+
+9. Why does the third assignment fail?
+
+>>> a = *pa;
+:7:{7:1-7:2}: error: array type 'int [5]' is not assignable
+ a = *pa;
+ ~ ^
+We're trying to give the array the value of a pointer...
+
+10. What does code.c do?  How difficult would it be to do something similar in LC-3 assembly?
+
+code.c is doing matrix multiplication. The output is the identity matrix, meaning b is the inverse of a. This would be extremely difficult in LC-3 assembly.

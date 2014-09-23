@@ -1,0 +1,9 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	LOOP              3008
+//	FOUND             3010
+//	END_P             3012
+//	MEM_START         3013
+
